@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista tarjetas de credito</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nombre del Titular</th>
+        <th>Número de Tarjeta</th>
+        <th>Saldo Actual</th>
+        <th>Límite de Crédito</th>
+        <th>Saldo Disponible</th>
+    </tr>
+    @foreach (var tarjeta in Model)
+    {
+        <tr>
+            <td>@tarjeta.Id</td>
+            <td>@tarjeta.NombreTitular</td>
+            <td>@tarjeta.NumeroTarjeta</td>
+            <td>@tarjeta.SaldoActual</td>
+            <td>@tarjeta.LimiteCredito</td>
+            <td>@tarjeta.SaldoDisponible</td>
+        </tr>
+    }
+</table>
+

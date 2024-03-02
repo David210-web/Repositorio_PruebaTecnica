@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Transacciones";
+}
+
+@model InterfazGrafica.Models.Estado_Transaccion
+
+<main>
+    <h2>Transacciones</h2>
+    <section>
+        <ul class="list-inline">
+            <li> <b>Nombre del cliente: </b> @Model.EstadoCuenta.NombreTitular </li>
+            <li><b>Numero de tarjeta de credito: </b> @Model.EstadoCuenta.NumeroTarjeta</li>
+            
+        </ul>
+    </section>
+    <hr />
+    <table class="table">
+        <thead class="text-center">
+            <tr>
+                <th scope="col">Fecha Compra</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Monto</th>
+                <th scope="col">Tipo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model.TransaccionesUsuario)
+            {
+                <tr>
+                    <td>@obj.FechaCompra</td>
+                    <td>@obj.Descripcion</td>
+                    <td>@obj.Monto</td>
+                    <td>@obj.Tipo</td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <hr />
+    <a href="@Url.Action("Index")" class="btn btn-danger d-block m-auto">Volver</a>
+</main>
+

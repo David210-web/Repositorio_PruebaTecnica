@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Lista tarjeta de credito por Id</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nombre del Titular</th>
+        <th>Número de Tarjeta</th>
+        <th>Saldo Actual</th>
+        <th>Límite de Crédito</th>
+        <th>Saldo Disponible</th>
+    </tr>
+    @if (Model != null)
+    {
+        <tr>
+            <td>@Model.Id</td>
+            <td>@Model.NombreTitular</td>
+            <td>@Model.NumeroTarjeta</td>
+            <td>@Model.SaldoActual</td>
+            <td>@Model.LimiteCredito</td>
+            <td>@Model.SaldoDisponible</td>
+        </tr>
+    }
+</table>
+

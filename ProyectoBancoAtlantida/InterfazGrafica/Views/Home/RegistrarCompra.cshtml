@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Registrar compra";
+    int tarjetaId = ViewBag.TarjetaCreditoId;
+    
+}
+@model InterfazGrafica.Models.EstadoCuenta
+<main>
+    <div class="container">
+        <h2>Registro de compra</h2>
+        <hr />
+        <section>
+            <ul class="list-inline">
+                <li><b>Nombre del cliente: </b> @Model.NombreTitular </li>
+                <li><b>Numero de tarjeta de credito del cliente: </b> @Model.NumeroTarjeta </li>
+            </ul>
+        </section>
+        <hr />
+        @using (Html.BeginForm("GuardarCompra","Home",FormMethod.Post))
+         {
+                @Html.Hidden("IdTarjeta", tarjetaId)
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Fecha de compra:</label>
+                    <input type="date" class="form-control" id="fechaCompra" name="FechaCompra">
+                </div>
+                <div class="mb-3">
+                    <label for="descrpcion" class="form-label">Descripcion</label>
+                    <input type="text" class="form-control" id="descripcion" name="Descripcion">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="monto">Monto</label>
+                    <input type="number" min="0" class="form-control" id="monto" name="Monto">
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="reset" class="btn btn-dark">Cancelar</button>
+         }
+    </div>
+    <hr />
+    <a class="btn btn-danger mt-3 d-block m-auto" href="@Url.Action("Index")">Volver</a>
+</main>
