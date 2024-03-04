@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "a8c364f5-7b94-4068-9743-a9fcec8f7c94",
+		"name": "Pruebas Api Banco Atlantida",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28699873"
+	},
+	"item": [
+		{
+			"name": "Mostrar Tarjetas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"IDTarjetaCredito\": 3,\r\n    \"FechaPago\": \"2024-03-02\",\r\n    \"Monto\": 25.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44320/api/Tarjeta",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44320",
+					"path": [
+						"api",
+						"Tarjeta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pedir tarjeta por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44320/api/Tarjeta/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44320",
+					"path": [
+						"api",
+						"Tarjeta",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener estado cuenta por id tarjeta de credito",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44320/api/EstadoCuenta/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44320",
+					"path": [
+						"api",
+						"EstadoCuenta",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las compras",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44320/api/Compra/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44320",
+					"path": [
+						"api",
+						"Compra",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener compras de un cliente en base al id tarjeta de credito",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44320/api/Compra/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44320",
+					"path": [
+						"api",
+						"Compra",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insertar Compras",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"IdTarjeta\": 4,\r\n    \"FechaCompra\": \"2024-03-03\",\r\n    \"descripcion\": \"Mc Donalds\",\r\n    \"monto\": 12\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44320/api/Compra/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44320",
+					"path": [
+						"api",
+						"Compra",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insertar Pago",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"IdTarjetaCredito\": 4,\r\n    \"FechaPago\": \"2024-03-03\",\r\n    \"Monto\": 10.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44320/api/Pago/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44320",
+					"path": [
+						"api",
+						"Pago",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener transacciones por id tarjeta credito",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44320/api/Transacciones/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44320",
+					"path": [
+						"api",
+						"Transacciones",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,3 +1,6 @@
+use ProyectoBancoAtlantida
+GO
+
 --Procedimientos almacenados
 CREATE PROCEDURE sp_GetEstadoCuenta--
     @IDTarjetaCredito INT
@@ -12,6 +15,10 @@ BEGIN
     DECLARE @CuotaMinima DECIMAL(10, 2)
     DECLARE @MontoTotalAPagar DECIMAL(10, 2)
     DECLARE @MontoTotalContadoIntereses DECIMAL(10, 2)
+	DECLARE @Abono DECIMAL(10,2)
+
+	SET @Abono = ISNULL((SELECT SUM(Monto) FROM Pago WHERE IDTarjetaCredito = @IDTarjetaCredito), 0.0)
+
 
     SELECT
         @NombreTitular = NombreTitular,
@@ -24,9 +31,13 @@ BEGIN
     WHERE
         IDTarjetaCredito = @IDTarjetaCredito;
 
+	SET @SaldoDisponible = ISNULL(@SaldoDisponible, 0.0) - @Abono
+
+
     SET @InteresBonificable = @SaldoActual * (SELECT TOP 1 PorcentajeInteresConfigurable FROM Configuracion);
     SET @CuotaMinima = @SaldoActual * (SELECT TOP 1 PorcentajeConfigurableSaldoMinimo FROM Configuracion);
-    SET @MontoTotalAPagar = @SaldoActual * (SELECT TOP 1 SUM(Monto) FROM Compra WHERE IDTarjetaCredito = @IDTarjetaCredito);
+    SET @MontoTotalAPagar = ISNULL(@SaldoActual, 0.0) + ISNULL((SELECT TOP 1 SUM(Monto) FROM Compra WHERE IDTarjetaCredito = @IDTarjetaCredito), 0.0);
+
     SET @MontoTotalContadoIntereses = @SaldoActual + @InteresBonificable;
 
     SELECT
@@ -40,8 +51,7 @@ BEGIN
         @MontoTotalAPagar AS 'Monto Total A Pagar',
         @MontoTotalContadoIntereses AS 'Monto Total Contado Intereses';
 END
-
-Exec sp_GetEstadoCuenta 1
+GO
 
 
 CREATE PROCEDURE sp_GetComprasMes
@@ -57,7 +67,9 @@ BEGIN
     WHERE
         IDTarjetaCredito = @IDTarjetaCredito
         AND MONTH(FechaCompra) = MONTH(GETDATE());
-END;
+END
+GO
+
 
 
 CREATE PROCEDURE sp_CalcularCuotaMinima
@@ -69,14 +81,16 @@ BEGIN
     SELECT @SaldoTotal = SaldoActual FROM TarjetaCredito WHERE IDTarjetaCredito = @IDTarjetaCredito;
 
     SELECT @SaldoTotal * (SELECT PorcentajeConfigurableSaldoMinimo FROM Configuracion) AS CuotaMinima;
-END;
+END
+GO
 
 CREATE PROCEDURE sp_ObtenerTodasTarjetasCredito--
 AS
 BEGIN
     SELECT *
     FROM TarjetaCredito;
-END;
+END
+GO
 
 CREATE PROCEDURE sp_ObtenerTodasTarjetasCreditoPorId--
 	@Id int
@@ -84,12 +98,8 @@ AS
 BEGIN
     SELECT *
     FROM TarjetaCredito where IDTarjetaCredito = @Id;
-END;
-
-
-EXEC sp_GetEstadoCuenta 1
-
-SELECT * FROM Compra
+END
+GO
 
 CREATE PROCEDURE Sp_ObtenerHistorialTransacciones
 	@IDTarjetaCredito int
@@ -117,7 +127,7 @@ BEGIN
 		P.IDTarjetaCredito,
 		P.FechaPago,
 		'Pago' AS Descripcion,
-		P.Monto,
+		P.Monto AS Abono,
 		'Pago' AS Tipo
 	FROM
 		Pago P
@@ -128,10 +138,8 @@ BEGIN
 	ORDER BY
 		FechaCompra DESC;
 END
+GO
 
-exec Sp_ObtenerHistorialTransacciones 1
-
-SELECT * FROM Compra
 
 CREATE PROCEDURE Sp_insertarPago
 	@IdTarjetaCredito int,
@@ -144,6 +152,7 @@ BEGIN
 	VALUES
 	(@IdTarjetaCredito,@FechaPago,@Monto)
 END
+GO
 
 
 CREATE PROCEDURE sp_InsertarCompra
@@ -158,6 +167,47 @@ BEGIN
 	VALUES
 	(@IdTarjetaCredito,@FechaCompra,@descripcion,@monto)
 END
+GO
 
-SELECT * FROM Pago
+CREATE PROCEDURE sp_CalcularCompraMesActual
+	@IdTarjetaCredito int
+AS
+BEGIN
+	SELECT SUM(Monto) as 'Compra Total' FROM Compra where IDTarjetaCredito = @IdTarjetaCredito and MONTH(FechaCompra) = MONTH(GETDATE())
+END
+GO
+
+CREATE PROCEDURE sp_CalcularCompraMesAnterior
+	@IdTarjetaCredito int
+AS
+BEGIN
+	DECLARE @MesAnterior int
+	DECLARE @AnioAnterior int
+
+	SET @MesAnterior = MONTH(GETDATE()) - 1
+	SET @AnioAnterior = YEAR(GETDATE())
+
+	IF @MesAnterior = 0
+	BEGIN
+		SET @MesAnterior = 12
+		SET @AnioAnterior = @AnioAnterior - 1
+	END
+
+	SELECT SUM(Monto) as 'Compra Total'
+	FROM Compra
+	WHERE IDTarjetaCredito = @IdTarjetaCredito
+	AND MONTH(FechaCompra) = @MesAnterior
+	AND YEAR(FechaCompra) = @AnioAnterior;
+END
+GO
+
+CREATE PROCEDURE sp_obtenerComprasTotales
+AS
+BEGIN
+	SELECT c.IDCompra,tc.NombreTitular as 'Autor compra',
+	c.FechaCompra, c.Descripcion,c.Monto
+	FROM Compra c
+	INNER JOIN TarjetaCredito tc on c.IDTarjetaCredito = tc.IDTarjetaCredito
+	order by IDCompra asc
+END
 

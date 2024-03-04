@@ -12,15 +12,15 @@ namespace ApiRest.Controllers
     public class PagoController : ApiController
     {
         // GET: api/Pago
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+            return "No hay metodo get";
         }
 
         // GET: api/Pago/5
         public string Get(int id)
         {
-            return "value";
+            return "No hay metodo get";
         }
 
         // POST: api/Pago
@@ -29,14 +29,6 @@ namespace ApiRest.Controllers
             return PagoData.CreatePago(p);
         }
 
-        // PUT: api/Pago/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Pago/5
-        public void Delete(int id)
-        {
-        }
+       
     }
 }

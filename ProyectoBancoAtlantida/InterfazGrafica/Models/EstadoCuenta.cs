@@ -7,6 +7,7 @@ namespace InterfazGrafica.Models
 {
     public class EstadoCuenta
     {
+
         public string NombreTitular { get; set; }
         public string NumeroTarjeta { get; set; }
         public double SaldoActual { get; set; }
@@ -16,5 +17,9 @@ namespace InterfazGrafica.Models
         public double CuotaMinima { get; set; }
         public double MontoTotalApagar { get; set; }
         public double MontoTotalContadoIntereses { get; set; }
+        public double CompraTotalMes { get; set; }
+        public double CompraTotalMesAnterior { get; set; }
+
+
     }
 }

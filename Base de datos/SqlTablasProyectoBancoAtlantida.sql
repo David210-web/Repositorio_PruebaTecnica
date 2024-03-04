@@ -16,6 +16,7 @@ CREATE TABLE TarjetaCredito (
     LimiteCredito DECIMAL(10, 2),
     SaldoDisponible DECIMAL(10, 2)
 );
+GO
 
 -- Tabla Compra
 CREATE TABLE Compra (
@@ -26,6 +27,7 @@ CREATE TABLE Compra (
     Monto DECIMAL(10, 2),
     FOREIGN KEY (IDTarjetaCredito) REFERENCES TarjetaCredito(IDTarjetaCredito)
 );
+GO
 
 -- Tabla Pago
 CREATE TABLE Pago (
@@ -35,10 +37,11 @@ CREATE TABLE Pago (
     Monto DECIMAL(10, 2),
     FOREIGN KEY (IDTarjetaCredito) REFERENCES TarjetaCredito(IDTarjetaCredito)
 );
+GO
 
 CREATE TABLE Configuracion (
     IDConfiguracion INT PRIMARY KEY identity(1,1),
     PorcentajeInteresConfigurable DECIMAL(5, 2),
     PorcentajeConfigurableSaldoMinimo DECIMAL(5, 2)
 );
-
+GO

@@ -12,15 +12,15 @@ namespace ApiRest.Controllers
     public class CompraController : ApiController
     {
         // GET: api/Compra
-        public IEnumerable<string> Get()
+        public IEnumerable<Compra> Get()
         {
-            return new string[] { "value1", "value2" };
+            return CompraData.GetCompras();
         }
 
         // GET: api/Compra/5
         public IEnumerable<Compra> Get(int id)
         {
-            return CompraData.GetCompras(id);
+            return CompraData.GetComprasPorUsuario(id);
         }
 
         // POST: api/Compra
@@ -29,14 +29,6 @@ namespace ApiRest.Controllers
             return CompraData.CreateCompra(c);
         }
 
-        // PUT: api/Compra/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Compra/5
-        public void Delete(int id)
-        {
-        }
+        
     }
 }

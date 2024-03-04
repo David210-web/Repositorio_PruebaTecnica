@@ -1,11 +1,13 @@
 ﻿
 @{
     ViewBag.Title = "RegistroPago";
+    int tarjetaId = ViewBag.TarjetaCreditoId;
+
 }
 @model InterfazGrafica.Models.EstadoCuenta
 <main>
     <div class="container">
-        <h2>Registro de compra</h2>
+        <h2>Registro de pago</h2>
         <hr />
         <section>
             <ul class="list-inline">
@@ -14,19 +16,21 @@
             </ul>
         </section>
         <hr />
-        <form>
+        @using (Html.BeginForm("GuardarPago", "Home", FormMethod.Post))
+        {
+            @Html.Hidden("IdTarjetaCredito", tarjetaId)
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Fecha de compra:</label>
-                <input type="date" class="form-control" id="fechaCompra">
+                <label for="exampleInputEmail1" class="form-label">Fecha de pago:</label>
+                <input type="date" class="form-control" id="fechaCompra" name="FechaPago">
             </div>
-           
+
             <div class="mb-3">
                 <label class="form-label" for="monto">Monto</label>
-                <input type="number" min="0" class="form-control" id="monto">
+                <input type="number" min="0" class="form-control" id="monto" name="Monto" step="any">
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
             <button type="reset" class="btn btn-dark">Cancelar</button>
-        </form>
+        }
     </div>
     <hr />
     <a class="btn btn-danger mt-3 d-block m-auto" href="@Url.Action("Index")">Volver</a>

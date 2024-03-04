@@ -24,40 +24,44 @@
         </ul>
     </section>
     <hr />
-    
-        <table class="table">
-            <thead>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Monto</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @foreach (var compras in Model.comprasUsuario)
+            {
                 <tr>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Monto</th>
+                    <td>@compras.FechaCompra</td>
+                    <td>@compras.Descripcion</td>
+                    <td>$@compras.Monto</td>
                 </tr>
-            </thead>
-            <tbody>
-                @{
-                    double montoTotalMes = 0; // Variable para mantener el total del mes
-                }
 
-                @foreach (var compras in Model.comprasUsuario)
-                {
-                    <tr>
-                        <td>@compras.FechaCompra</td>
-                        <td>@compras.Descripcion</td>
-                        <td>@compras.Monto</td>
-                    </tr>
-                    @montoTotalMes = montoTotalMes + compras.Monto; // Sumar el monto de cada compra al total del mes
-                    
-                }
-            </tbody>
-        </table>
-        <section class="d-flex">
-            <div>
-                <p>$@montoTotalMes </p>
-                <p>Total de compras este mes</p>
-            </div>
-        </section>
-     
-     
 
-    <a class="btn btn-danger" href="@Url.Action("Index")">Volver</a>
+            }
+        </tbody>
+    </table>
+    <section class="d-flex justify-content-around">
+        <div>
+            <p><b>$@Model.EstadoCuenta.CompraTotalMesAnterior </b></p>
+            <p>Total de compras mes pasado</p>
+        </div>
+        <div>
+            <p><b>$@Model.EstadoCuenta.CompraTotalMes </b></p>
+            <p>Total de compras este mes</p>
+        </div>
+    </section>
+    <br />
+
+    <div class="container">
+        <a class="btn btn-danger d-block mt-2" href="@Url.Action("Index")">Volver</a>
+
+    </div>
 </main>

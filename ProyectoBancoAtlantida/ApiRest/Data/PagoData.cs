@@ -5,11 +5,14 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Net;
+using System.Web.Http;
 
 namespace ApiRest.Data
 {
     public class PagoData
     {
+        //Crea un nuevo registro de pago para la base de datos
         public static string CreatePago(Pago p)
         {
             using (SqlConnection conn = new SqlConnection(Conexion.UrlConexion))
@@ -27,9 +30,15 @@ namespace ApiRest.Data
                     }
                     return "Pago almacenado";
                 }
+                catch(SqlException sqlex)
+                {
+                    throw new HttpResponseException(
+                        HttpStatusCode.InternalServerError);
+                }
                 catch (Exception ex)
                 {
-                    return ex.Message;
+                    throw new HttpResponseException(
+                        HttpStatusCode.InternalServerError);
                 }
             }
         }

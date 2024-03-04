@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
+using System.Web.Http;
 
 namespace ApiRest.Data
 {
     public class TarjetasData
     {
+        //Pidiendo los datos de la tabla tarjetas a sql server por medio de un proceso
         public static List<Tarjeta> GetTarjetas()
         {
             List<Tarjeta> tarjetas = new List<Tarjeta>();
@@ -38,6 +41,12 @@ namespace ApiRest.Data
                     }
 
                 }
+                catch (SqlException sqlex)
+                {
+                    throw new HttpResponseException(
+                        HttpStatusCode.InternalServerError);
+
+                }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
@@ -46,6 +55,7 @@ namespace ApiRest.Data
             }
 
         }
+
 
         public static Tarjeta GetTarjetaPorId(int id)
         {
@@ -73,6 +83,12 @@ namespace ApiRest.Data
 
                         }
                     }
+
+                }
+                catch (SqlException sqlex)
+                {
+                    throw new HttpResponseException(
+                        HttpStatusCode.InternalServerError);
 
                 }
                 catch (Exception ex)

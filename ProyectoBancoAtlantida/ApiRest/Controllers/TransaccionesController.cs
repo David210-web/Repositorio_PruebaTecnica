@@ -22,19 +22,6 @@ namespace ApiRest.Controllers
             return TransaccionesData.GetTransacciones(id);
         }
 
-        // POST: api/Transacciones
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Transacciones/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Transacciones/5
-        public void Delete(int id)
-        {
-        }
+        
     }
 }

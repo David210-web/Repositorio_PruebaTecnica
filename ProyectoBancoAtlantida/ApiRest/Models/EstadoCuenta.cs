@@ -16,6 +16,8 @@ namespace ApiRest.Models
         public double CuotaMinima { get; set; }
         public double MontoTotalApagar { get; set;}
         public double MontoTotalContadoIntereses { get; set; }
+        public double CompraTotalMes {  get; set; }
+        public double CompraTotalMesAnterior {  get; set; }
 
     }
 }

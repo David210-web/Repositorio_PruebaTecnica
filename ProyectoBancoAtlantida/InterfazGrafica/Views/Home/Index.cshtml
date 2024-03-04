@@ -1,32 +1,16 @@
 ﻿@{
     ViewBag.Title = "Tarjetas Credito";
-    
+
 }
 
 @model List<InterfazGrafica.Models.Usuarios>
 
 <main>
-    <div class="container d-flex justify-content-between">
-        <section class="d-flex align-items-center">
-            <h3>Mostrar: </h3>
-            <select class="form-select mx-1" aria-label="Default select example">
-                <option value="10" selected>10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-            </select>
-        </section>
-        <section>
-            <nav class="navbar bg-body-tertiary">
-                <div class="container-fluid">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-danger" type="submit">Buscar</button>
-                    </form>
-                </div>
-            </nav>
-        </section>
-    </div>
-    <hr />
+    @using (Html.BeginForm("Exportar", "Home", FormMethod.Post, new { id = "exportarForm" }))
+     {
+        <button type="submit" class="btn btn-success">Descargar compras</button>
+     }
+
     <table class="table">
         <thead class="text-center">
             <tr>
@@ -37,20 +21,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var obj in Model)
-            { 
+            @foreach (var obj in Model)
+            {
                 <tr>
                     <td scope="row">@obj.Id</td>
                     <td>@obj.NumeroTarjeta</td>
                     <td>@obj.NombreTitular</td>
                     <td>
-                        <a class="btn btn-primary" href="@Url.Action("EstadoCuenta",new {id = obj.Id})"> Estado cuenta</a>
-                        <a class="btn btn-success" href="@Url.Action("RegistrarCompra",new {id = obj.Id})">Registrar compra</a>
-                        <a class="btn btn-warning" href="@Url.Action("RegistroPago", new {id = obj.Id})">Realizar pago</a>
-                        <a class="btn btn-secondary" href="@Url.Action("Transacciones", new {id = obj.Id})">Transacciones</a>
+                        <a class="btn btn-primary" href="@Url.Action("EstadoCuenta", new { id = obj.Id })"> Estado cuenta</a>
+                        <a class="btn btn-success" href="@Url.Action("RegistrarCompra", new { id = obj.Id })">Registrar compra</a>
+                        <a class="btn btn-warning" href="@Url.Action("RegistroPago", new { id = obj.Id })">Realizar pago</a>
+                        <a class="btn btn-secondary" href="@Url.Action("Transacciones", new { id = obj.Id })">Transacciones</a>
                     </td>
                 </tr>
-            }
+                }
             
         </tbody>
     </table>
